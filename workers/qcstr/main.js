@@ -1,16 +1,16 @@
 const { Worker } = require("bullmq");
 const path = require("path");
 const config = require("../../config/bullmq.config");
-const { DumpSTRJob, JobStatus } = require("../../models/DumpSTR.jobs");
-const DumpSTR = require("../../models/DumpSTR");
+const { QcSTRJob, JobStatus } = require("../../models/QcSTR.jobs");
+const QcSTR = require("../../models/QcSTR");
 
 const processorFile = path.join(__dirname, "worker.js");
 
-exports.createDumpSTRWorkers = async (numWorkers) => {
+exports.createQcSTRWorkers = async (numWorkers) => {
   for (let i = 0; i < numWorkers; i++) {
-    console.log("Creating DumpSTR worker " + i);
+    console.log("Creating QcSTR worker " + i);
 
-    const worker = new Worker(config.dumpSTRQueueName, processorFile, {
+    const worker = new Worker(config.qcSTRQueueName, processorFile, {
       connection: config.connection,
       limiter: config.limiter,
     });
@@ -20,7 +20,7 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
 
       // save in mongo database
       // job is complete
-      const parameters = await DumpSTR.findOne({
+      const parameters = await QcSTR.findOne({
         job: job.data.jobId,
       }).exec();
 
@@ -29,18 +29,36 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
       const pathToOutputDir = path.join(
         process.env.TR_WORKDIR,
         job.data.jobUID,
-        "dumpstr",
+        "qcstr",
         "output"
       );
 
-      const dumpFile = `${pathToOutputDir}/dump.vcf.gz`;
+      const qcFile = `${pathToOutputDir}/qc-diffref-bias.pdf`;
+      const qcFile2 = `${pathToOutputDir}/qc-diffref-histogram.pdf`;
+      const qcFile3 = `${pathToOutputDir}/qc-quality-locus-stratified.pdf`;
+      const qcFile4 = `${pathToOutputDir}/qc-quality-per-call.pdf`;
+      const qcFile5 = `${pathToOutputDir}/qc-quality-per-locus.pdf`;
+      const qcFile6 = `${pathToOutputDir}/qc-quality-per-sample.pdf`;
+      const qcFile7 = `${pathToOutputDir}/qc-quality-sample-stratified.pdf`;
+
+      const qcFile8 = `${pathToOutputDir}/qc-sample-callnum.pdf`;
+      const qcFile9 = `${pathToOutputDir}/qc-chrom-callnum.pdf`;
 
 
-      const finishedJob = await DumpSTRJob.findByIdAndUpdate(
+      const finishedJob = await QcSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.COMPLETED,
-          dumpFile,
+          qcFile,
+          qcFile2,
+          qcFile3,
+          qcFile4,
+          qcFile5,
+          qcFile6,
+          qcFile7,
+
+          qcFile8,
+          qcFile9,
           completionTime: new Date(),
         },
         { new: true }
@@ -52,7 +70,7 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
       console.log("worker " + i + " failed " + job.failedReason);
       //update job in database as failed
       //save in mongo database
-      const finishedJob = await DumpSTRJob.findByIdAndUpdate(
+      const finishedJob = await QcSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.FAILED,

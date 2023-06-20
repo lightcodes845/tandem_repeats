@@ -14,8 +14,8 @@ const { dumpSTRSchema } = require("../validation/dumpstr");
 
 const router = express.Router();
 
+router.post("/noauth/jobs", validate(dumpSTRSchema), createJobNoAuth);
 router.post("/jobs", protect, validate(dumpSTRSchema), createJob);
-router.post("noauth/jobs", validate(dumpSTRSchema), createJobNoAuth);
 router.get("/jobs", protect, jobResults, getJobs);
 router.get("/jobs/:id", protect, getJob).delete(protect, deleteJob);
 router.get("/noauth/jobs/:id", getJobNoAuth);

@@ -62,6 +62,7 @@ exports.getJob = asyncHandler(async (req, res, next) => {
 // @route GET /api/v1/dumpstr/noauth/jobs/:id
 // @access Public
 exports.getJobNoAuth = asyncHandler(async (req, res, next) => {
+  const id = req.params.id
   const job = await DumpSTRJob.findById(id)
     .populate("dumpstr")
     .populate("user");
@@ -76,7 +77,14 @@ exports.getJobNoAuth = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Unauthorized to access this job`, 401));
   }
 
-  return job;
+  //   return job;
+  // });
+
+
+  return res.status(200).json({
+    success: true,
+    data: job,
+  });
 });
 
 // @desc delete job

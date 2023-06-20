@@ -1,16 +1,16 @@
 const { Worker } = require("bullmq");
 const path = require("path");
 const config = require("../../config/bullmq.config");
-const { DumpSTRJob, JobStatus } = require("../../models/DumpSTR.jobs");
-const DumpSTR = require("../../models/DumpSTR");
+const { MergeSTRJob, JobStatus } = require("../../models/MergeSTR.jobs");
+const DumpSTR = require("../../models/MergeSTR");
 
 const processorFile = path.join(__dirname, "worker.js");
 
-exports.createDumpSTRWorkers = async (numWorkers) => {
+exports.createMergeSTRWorkers = async (numWorkers) => {
   for (let i = 0; i < numWorkers; i++) {
-    console.log("Creating DumpSTR worker " + i);
+    console.log("Creating MergeSTR worker " + i);
 
-    const worker = new Worker(config.dumpSTRQueueName, processorFile, {
+    const worker = new Worker(config.mergeSTRQueueName, processorFile, {
       connection: config.connection,
       limiter: config.limiter,
     });
@@ -20,7 +20,7 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
 
       // save in mongo database
       // job is complete
-      const parameters = await DumpSTR.findOne({
+      const parameters = await MergeSTR.findOne({
         job: job.data.jobId,
       }).exec();
 
@@ -29,18 +29,18 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
       const pathToOutputDir = path.join(
         process.env.TR_WORKDIR,
         job.data.jobUID,
-        "dumpstr",
+        "mergestr",
         "output"
       );
 
-      const dumpFile = `${pathToOutputDir}/dump.vcf.gz`;
+      const mergeFile = `${pathToOutputDir}/merge.vcf`;
 
 
-      const finishedJob = await DumpSTRJob.findByIdAndUpdate(
+      const finishedJob = await MergeSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.COMPLETED,
-          dumpFile,
+          mergeFile,
           completionTime: new Date(),
         },
         { new: true }
@@ -52,7 +52,7 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
       console.log("worker " + i + " failed " + job.failedReason);
       //update job in database as failed
       //save in mongo database
-      const finishedJob = await DumpSTRJob.findByIdAndUpdate(
+      const finishedJob = await MergeSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.FAILED,

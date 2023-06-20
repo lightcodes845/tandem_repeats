@@ -29,7 +29,7 @@ const DumpSTRJobSchema = new mongoose.Schema(
       trim: true,
     },
 
-    outputFile: {
+    dumpFile: {
       type: String,
       trim: true,
     },

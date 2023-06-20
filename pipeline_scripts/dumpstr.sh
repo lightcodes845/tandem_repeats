@@ -1,6 +1,7 @@
-#!/usr/env   bash
-
+#!/bin/bash
+echo "Running"
 bin_dir="/home/dzumi/anaconda3/bin";
+echo $bin_dir
 
 vcf=$1 #takes in a vcf file
 output_dir=$2 #output directory
@@ -41,7 +42,7 @@ tabix -p vcf $vcf #indexes the vcf file supplied
 if [ $vcftype=="auto" ]; then
 
 	args=()
-	if [ -n "$num_records" ]; then
+	if [ "$num_records" ]; then
 		args+=(--num-records $num_records)
 	fi
 
@@ -75,7 +76,7 @@ if [ $vcftype=="auto" ]; then
 
 elif [ $vcftype=="hipstr" ]; then
 args=()
-	if [ -n "$num_records" ]; then
+	if [ "$num_records" ]; then
 		args+=(--num-records $num_records)
 	fi
 
@@ -132,7 +133,7 @@ args=()
 
 elif [ $vcftype=="gangstr" ]; then
 	args=()
-	if [ -n "$num_records" ]; then
+	if [ "$num_records" ]; then
 		args+=(--num-records $num_records)
 	fi
 
@@ -189,7 +190,7 @@ elif [ $vcftype=="gangstr" ]; then
 
 elif [ $vcftype=="advntr" ]; then
 	args=()
-	if [ -n "$num_records" ]; then
+	if [ "$num_records" ]; then
 		args+=(--num-records $num_records)
 	fi
 
@@ -244,7 +245,7 @@ elif [ $vcftype=="advntr" ]; then
 
 elif [ $vcftype=="eh" ]; then
 	args=()
-	if [ -n "$num_records" ]; then
+	if [ "$num_records" ]; then
 		args+=(--num-records $num_records)
 	fi
 
@@ -289,7 +290,7 @@ elif [ $vcftype=="eh" ]; then
 
 elif [ $vcftype=="popstr" ]; then
 	args=()
-	if [ -n "$num_records" ]; then
+	if [ "$num_records" ]; then
 		args+=(--num-records $num_records)
 	fi
 

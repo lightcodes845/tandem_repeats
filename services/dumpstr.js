@@ -22,8 +22,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     if (file.size > process.env.MAX_FILE_UPLOAD) {
       return next(
         new ErrorResponse(
-          `Please upload an file less than ${
-            process.env.MAX_FILE_UPLOAD / 1024
+          `Please upload an file less than ${process.env.MAX_FILE_UPLOAD / 1024
           }MB`,
           400
         )
@@ -113,7 +112,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     }
 
     if (req.body.email) {
-      await queue.addJob(newJob[0]._id, {
+      await queue.add(newJob[0]._id, {
         jobId: newJob[0]._id,
         jobName: newJob[0].job_name,
         jobUID: newJob[0].jobUID,
@@ -126,6 +125,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     await sessionJob.commitTransaction();
     await sessionModel.commitTransaction();
     console.log("Job created");
+
     return {
       success: true,
       jobId: newJob[0]._id,

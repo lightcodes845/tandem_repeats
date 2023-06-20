@@ -1,16 +1,16 @@
 const { Worker } = require("bullmq");
 const path = require("path");
 const config = require("../../config/bullmq.config");
-const { DumpSTRJob, JobStatus } = require("../../models/DumpSTR.jobs");
-const DumpSTR = require("../../models/DumpSTR");
+const { StatSTRJob, JobStatus } = require("../../models/StatSTR.jobs");
+const StatSTR = require("../../models/StatSTR");
 
 const processorFile = path.join(__dirname, "worker.js");
 
-exports.createDumpSTRWorkers = async (numWorkers) => {
+exports.createStatSTRWorkers = async (numWorkers) => {
   for (let i = 0; i < numWorkers; i++) {
-    console.log("Creating DumpSTR worker " + i);
+    console.log("Creating StatSTR worker " + i);
 
-    const worker = new Worker(config.dumpSTRQueueName, processorFile, {
+    const worker = new Worker(config.statSTRQueueName, processorFile, {
       connection: config.connection,
       limiter: config.limiter,
     });
@@ -20,7 +20,7 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
 
       // save in mongo database
       // job is complete
-      const parameters = await DumpSTR.findOne({
+      const parameters = await StatSTR.findOne({
         job: job.data.jobId,
       }).exec();
 
@@ -29,18 +29,18 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
       const pathToOutputDir = path.join(
         process.env.TR_WORKDIR,
         job.data.jobUID,
-        "dumpstr",
+        "statstr",
         "output"
       );
 
-      const dumpFile = `${pathToOutputDir}/dump.vcf.gz`;
+      const statFile = `${pathToOutputDir}/stat.tab`;
 
 
-      const finishedJob = await DumpSTRJob.findByIdAndUpdate(
+      const finishedJob = await StatSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.COMPLETED,
-          dumpFile,
+          statFile,
           completionTime: new Date(),
         },
         { new: true }
@@ -52,7 +52,7 @@ exports.createDumpSTRWorkers = async (numWorkers) => {
       console.log("worker " + i + " failed " + job.failedReason);
       //update job in database as failed
       //save in mongo database
-      const finishedJob = await DumpSTRJob.findByIdAndUpdate(
+      const finishedJob = await StatSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.FAILED,
