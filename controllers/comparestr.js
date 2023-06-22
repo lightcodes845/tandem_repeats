@@ -1,14 +1,14 @@
 const { v4: uuidv4 } = require("uuid");
-const MergeSTR = require("../models/MergeSTR");
-const { MergeSTRJob, JobStatus } = require("../models/MergeSTR.jobs");
+const CompareSTR = require("../models/CompareSTR");
+const { CompareSTRJob, JobStatus } = require("../models/CompareSTR.jobs");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middlewares/async");
 const { fileOrPathExists } = require("../utils/fileutils");
-const { createJob } = require("../services/mergestr");
-const queue = require("../queues/mergestr.queue");
+const { createJob } = require("../services/comparestr");
+const queue = require("../queues/comparestr.queue");
 
-// @desc create new MergeSTR job
-// @route POST /api/v1/mergestr/jobs
+// @desc create new CompareSTR job
+// @route POST /api/v1/comparestr/jobs
 // @access Private
 exports.createJob = asyncHandler(async (req, res, next) => {
     const result = await createJob(req, next, queue, req.user, null);
@@ -17,8 +17,8 @@ exports.createJob = asyncHandler(async (req, res, next) => {
     res.status(201).json(result);
 });
 
-// @desc create new MergeSTR job
-// @route POST /api/v1/mergestr/noauth/jobs
+// @desc create new CompareSTR job
+// @route POST /api/v1/comparestr/noauth/jobs
 // @access Public
 exports.createJobNoAuth = asyncHandler(async (req, res, next) => {
     const result = await createJob(req, next, queue, null, req.body.email);
@@ -28,18 +28,18 @@ exports.createJobNoAuth = asyncHandler(async (req, res, next) => {
 });
 
 // @desc get all jobs
-// @route GET /api/v1/mergestr/jobs
+// @route GET /api/v1/comparestr/jobs
 // @access Private
 exports.getJobs = asyncHandler(async (req, res, next) => {
     res.status(200).json(res.jobResults);
 });
 
 // @desc get single job
-// @route GET /api/v1/mergestr/jobs/:id
+// @route GET /api/v1/comparestr/jobs/:id
 // @access Private
 exports.getJob = asyncHandler(async (req, res, next) => {
-    const job = await MergeSTRJob.findById(id)
-        .populate("mergestr")
+    const job = await CompareSTRJob.findById(id)
+        .populate("comparestr")
         .populate("user");
 
     if (!job) {
@@ -59,12 +59,12 @@ exports.getJob = asyncHandler(async (req, res, next) => {
 });
 
 // @desc get single job no authentication
-// @route GET /api/v1/mergestr/noauth/jobs/:id
+// @route GET /api/v1/comparestr/noauth/jobs/:id
 // @access Public
 exports.getJobNoAuth = asyncHandler(async (req, res, next) => {
     const id = req.params.id
-    const job = await MergeSTRJob.findById(id)
-        .populate("mergestr")
+    const job = await CompareSTRJob.findById(id)
+        .populate("comparestr")
         .populate("user");
 
     if (!job) {
@@ -88,10 +88,10 @@ exports.getJobNoAuth = asyncHandler(async (req, res, next) => {
 });
 
 // @desc delete job
-// @route DELETE /api/v1/mergestr/jobs/:id
+// @route DELETE /api/v1/comparestr/jobs/:id
 // @access Private
 exports.deleteJob = asyncHandler(async (req, res, next) => {
-    const job = await MergeSTRJob.findById(req.params.id);
+    const job = await CompareSTRJob.findById(req.params.id);
 
     if (!job) {
         return next(

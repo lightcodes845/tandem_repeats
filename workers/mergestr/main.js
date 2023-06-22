@@ -2,7 +2,7 @@ const { Worker } = require("bullmq");
 const path = require("path");
 const config = require("../../config/bullmq.config");
 const { MergeSTRJob, JobStatus } = require("../../models/MergeSTR.jobs");
-const DumpSTR = require("../../models/MergeSTR");
+const MergeSTR = require("../../models/MergeSTR");
 
 const processorFile = path.join(__dirname, "worker.js");
 

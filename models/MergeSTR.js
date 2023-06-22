@@ -10,7 +10,7 @@ const MergeSTRSchema = new mongoose.Schema(
         },
         job: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "DumpSTRJob",
+            ref: "MergeSTRJob",
             required: true,
         },
         vcftype: {

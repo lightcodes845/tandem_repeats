@@ -156,10 +156,12 @@ module.exports = async (job) => {
 
 
   closeDB();
+  //changes here
 
-  if (qcstr | qcstr2 | qcstr3 | qcstr4 | qcstr5 | qcstr6 | qcstr7 | qcstr8 | qcstr9) {
+  if (qcstr || qcstr2 || qcstr3 || qcstr4 || qcstr5 || qcstr6 || qcstr7 || qcstr8 || qcstr9) {
     console.log(`${job?.data?.jobName} spawn done!`);
-    return true;
+    // return true;
+    return { success: true, qcFile8: qcstr8, qcFile9: qcstr9 };
   } else {
     throw new Error(
       error_msg ||
