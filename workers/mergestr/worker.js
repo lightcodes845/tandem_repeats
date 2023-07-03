@@ -44,18 +44,21 @@ module.exports = async (job) => {
 
 
   //create input file and folder
-  let filename;
+  let filename = [];
 
   //--2
   //extract file name
+  const tempPaths = fileInput.split(',');
   if (parameters.useTest === false) {
-    const name = fileInput.split(/(\\|\/)/g).pop();
-    filename = path.join(
-      process.env.TR_WORKDIR,
-      jobParams.jobUID,
-      "input",
-      name
-    );
+    tempPaths.forEach((dd) => {
+      const name = dd.split(/(\\|\/)/g).pop();
+      filename.push(path.join(
+        process.env.TR_WORKDIR,
+        jobParams.jobUID,
+        "input",
+        name
+      ));
+    })
   } else {
     filename = path.join(
       process.env.TR_WORKDIR,
@@ -66,19 +69,23 @@ module.exports = async (job) => {
   }
 
   //move file to input folder
-  fs.mkdirSync(path.dirname(filename), { recursive: true });
-  fs.copyFileSync(fileInput, filename);
+  fs.mkdirSync(path.dirname(filename[0]), { recursive: true });
+  filename.forEach((dd, i) => {
+    fs.copyFileSync(tempPaths[i], dd);
+  })
 
   if (parameters.useTest === false) {
-    deleteFileorFolder(jobParams.inputFile).then(() => {
-      console.log("deleted");
-    });
+    tempPaths.forEach((dd) => {
+      deleteFileorFolder(dd).then(() => {
+        console.log("deleted");
+      });
+    })
   }
 
 
 
   //assemble job parameters
-  const pathToInputFile = filename;
+  const pathToInputFile = filename.join(',');
   const pathToOutputDir = path.join(
     process.env.TR_WORKDIR,
     jobParams.jobUID,
@@ -97,7 +104,7 @@ module.exports = async (job) => {
     job.data.jobId,
     {
       status: JobStatus.RUNNING,
-      inputFile: filename,
+      inputFile: filename.join(','),
     },
     { new: true }
   );

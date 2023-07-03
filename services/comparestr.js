@@ -12,6 +12,8 @@ exports.createJob = async (req, next, queue, user, email) => {
 
     // validate input file
     const file = req.files.file;
+    const file2 = req.files.file2;
+
 
     if (req.body.useTest === "false") {
         if (!file) {
@@ -24,6 +26,17 @@ exports.createJob = async (req, next, queue, user, email) => {
                 new ErrorResponse(
                     `Please upload an file less than ${process.env.MAX_FILE_UPLOAD / 1024
                     }MB`,
+                    400
+                )
+            );
+        }
+        // }
+
+        // Check file2 size
+        if (file2 && file2.size > process.env.MAX_FILE_UPLOAD) {
+            return next(
+                new ErrorResponse(
+                    `Please upload file2 less than ${process.env.MAX_FILE_UPLOAD / 1024}MB`,
                     400
                 )
             );
@@ -53,6 +66,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     }
 
     let filepath = "";
+    let filepath2 = "";
     let longJob = false;
 
     if (req.body.useTest === "true" && !file) {
@@ -67,7 +81,18 @@ exports.createJob = async (req, next, queue, user, email) => {
         longJob = file.size > 50 * 1024 * 1024;
     }
 
+    if (file2) {
+        filepath2 = file2.tempFilePath;
+        fs.renameSync(
+            filepath2,
+            path.join(process.env.TR_WORKDIR, "temp", file2.name)
+        );
+        filepath2 = path.join(process.env.TR_WORKDIR, "temp", file2.name);
+        longJob = longJob || file2.size > 50 * 1024 * 1024;
+    }
+
     req.body.inputFile = filepath;
+    req.body.inputFile2 = filepath2;
     req.body.status = JobStatus.QUEUED;
     req.body.longJob = longJob;
     req.body.jobUID = jobUID;

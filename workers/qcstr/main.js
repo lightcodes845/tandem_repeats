@@ -3,6 +3,7 @@ const path = require("path");
 const config = require("../../config/bullmq.config");
 const { QcSTRJob, JobStatus } = require("../../models/QcSTR.jobs");
 const QcSTR = require("../../models/QcSTR");
+const { fileOrPathExists } = require("../../utils/fileutils");
 
 const processorFile = path.join(__dirname, "worker.js");
 
@@ -41,8 +42,25 @@ exports.createQcSTRWorkers = async (numWorkers) => {
       const qcFile6 = `${pathToOutputDir}/qc-quality-per-sample.pdf`;
       const qcFile7 = `${pathToOutputDir}/qc-quality-sample-stratified.pdf`;
 
-      const qcFile8 = `${pathToOutputDir}/qc-sample-callnum.pdf`;
-      const qcFile9 = `${pathToOutputDir}/qc-chrom-callnum.pdf`;
+      const qcstr8 = await fileOrPathExists(
+        path.join(pathToOutputDir, "qc-sample-callnum.pdf")
+      );
+
+      const qcstr9 = await fileOrPathExists(
+        path.join(pathToOutputDir, "qc-chrom-callnum.pdf")
+      );
+
+      let qcFile8 = "";
+      if (qcstr8) {
+        qcFile8 = `${pathToOutputDir}/qc-sample-callnum.pdf`;
+      }
+
+      let qcFile9 = "";
+      if (qcstr9) {
+        const qcFile9 = `${pathToOutputDir}/qc-chrom-callnum.pdf`;
+      }
+
+
 
 
       const finishedJob = await QcSTRJob.findByIdAndUpdate(

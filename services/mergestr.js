@@ -13,6 +13,8 @@ exports.createJob = async (req, next, queue, user, email) => {
     // validate input file
     const file = req.files.file;
 
+    console.log(req.files);
+
     if (req.body.useTest === "false") {
         if (!file) {
             return next(new ErrorResponse(`Please upload a file`, 400));
@@ -52,22 +54,25 @@ exports.createJob = async (req, next, queue, user, email) => {
         return next(new ErrorResponse(`Problem with creating job workspace`, 500));
     }
 
-    let filepath = "";
+    let filepath = [];
     let longJob = false;
 
     if (req.body.useTest === "true" && !file) {
         filepath = testPath;
     } else {
-        filepath = file.tempFilePath;
-        fs.renameSync(
-            filepath,
-            path.join(process.env.TR_WORKDIR, "temp", file.name)
-        );
-        filepath = path.join(process.env.TR_WORKDIR, "temp", file.name);
-        longJob = file.size > 50 * 1024 * 1024;
+        for (let index = 0; index < file.length; index++) {
+            let temppath = file[index].tempFilePath;
+            fs.renameSync(
+                temppath,
+                path.join(process.env.TR_WORKDIR, "temp", file[index].name)
+            );
+            temppath = path.join(process.env.TR_WORKDIR, "temp", file[index].name);
+            filepath.push(temppath)
+        }
+        longJob = file.length > 5;
     }
 
-    req.body.inputFile = filepath;
+    req.body.inputFile = filepath.join(',');
     req.body.status = JobStatus.QUEUED;
     req.body.longJob = longJob;
     req.body.jobUID = jobUID;

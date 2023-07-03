@@ -29,10 +29,36 @@ const CompareSTRJobSchema = new mongoose.Schema(
             trim: true,
         },
 
+        inputFile2: {
+            type: String,
+            required: [true, "Please add a input filename"],
+            trim: true,
+        },
+
+
         compareFile: {
             type: String,
             trim: true,
         },
+
+        compareFile2: {
+            type: String,
+            trim: true,
+        },
+        compareFile3: {
+            type: String,
+            trim: true,
+        },
+        compareFile4: {
+            type: String,
+            trim: true,
+        },
+        compareFile5: {
+            type: String,
+            trim: true,
+        },
+
+
         status: {
             type: String,
             enum: [

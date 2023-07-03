@@ -47,9 +47,12 @@ module.exports = async (job) => {
 
   //--1
   let fileInput = jobParams.inputFile;
+  let fileInput2 = jobParams.inputFile2;
+
 
   //create input file and folder
   let filename;
+  let filename2;
 
   //--2
   //extract file name
@@ -70,18 +73,39 @@ module.exports = async (job) => {
     );
   }
 
+  if (fileInput2) {
+    const name2 = fileInput2.split(/(\\|\/)/g).pop();
+    filename2 = path.join(
+      process.env.TR_WORKDIR,
+      jobParams.jobUID,
+      "input",
+      name2
+    );
+  }
+
   //move file to input folder
   fs.mkdirSync(path.dirname(filename), { recursive: true });
   fs.copyFileSync(fileInput, filename);
+
+  if (filename2) {
+    fs.copyFileSync(fileInput2, filename2);
+  }
 
   if (parameters.useTest === false) {
     deleteFileorFolder(jobParams.inputFile).then(() => {
       console.log("deleted");
     });
+    if (filename2) {
+      deleteFileorFolder(jobParams.inputFile2).then(() => {
+        console.log("deleted");
+      });
+    }
   }
 
   //assemble job parameters
   const pathToInputFile = filename;
+  const pathToInputFile2 = filename2;
+
   const pathToOutputDir = path.join(
     process.env.TR_WORKDIR,
     jobParams.jobUID,
@@ -89,8 +113,9 @@ module.exports = async (job) => {
     "output"
   );
   const jobParameters = getJobParameters(parameters);
-  jobParameters.unshift(pathToInputFile, pathToOutputDir);
+  jobParameters.unshift(pathToInputFile, pathToInputFile2, pathToOutputDir);
   // console.log(jobParameters);
+  console.log("Job Param");
   console.log(jobParameters);
   //make output directory
   fs.mkdirSync(pathToOutputDir, { recursive: true });
@@ -101,6 +126,7 @@ module.exports = async (job) => {
     {
       status: JobStatus.RUNNING,
       inputFile: filename,
+      inputFile2: filename2,
     },
     { new: true }
   );
@@ -126,15 +152,27 @@ module.exports = async (job) => {
   console.log(error_msg);
 
   const comparestr = await fileOrPathExists(
-    path.join(pathToOutputDir, "compare.vcf.gz")
+    path.join(pathToOutputDir, "compare-samplecompare.tab")
   );
-  const log = await fileOrPathExists(
-    path.join(pathToOutputDir, "compare.samplog.tab")
+  const comparestr2 = await fileOrPathExists(
+    path.join(pathToOutputDir, "compare-samplecompare.pdf")
+  );
+  const comparestr3 = await fileOrPathExists(
+    path.join(pathToOutputDir, "compare-overall.tab")
+  );
+  const comparestr4 = await fileOrPathExists(
+    path.join(pathToOutputDir, "compare-locuscompare.tab")
+  );
+  const comparestr5 = await fileOrPathExists(
+    path.join(pathToOutputDir, "compare-locuscompare.pdf")
+  );
+  const comparestr6 = await fileOrPathExists(
+    path.join(pathToOutputDir, "compare-bubble-periodALL.pdf")
   );
 
   closeDB();
 
-  if (comparestr | log) {
+  if (comparestr || comparestr2 || comparestr3 || comparestr4 || comparestr5 || comparestr6) {
     console.log(`${job?.data?.jobName} spawn done!`);
     return true;
   } else {

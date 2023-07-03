@@ -33,7 +33,12 @@ exports.createCompareSTRWorkers = async (numWorkers) => {
         "output"
       );
 
-      const compareFile = `${pathToOutputDir}/compare.vcf.gz`;
+      const compareFile = `${pathToOutputDir}/compare-samplecompare.tab`;
+      const compareFile2 = `${pathToOutputDir}/compare-samplecompare.pdf`;
+      const compareFile3 = `${pathToOutputDir}/compare-overall.tab`;
+      const compareFile4 = `${pathToOutputDir}/compare-locuscompare.tab`;
+      const compareFile5 = `${pathToOutputDir}/compare-locuscompare.pdf`;
+      const compareFile6 = `${pathToOutputDir}/compare-bubble-periodALL.pdf`;
 
 
       const finishedJob = await CompareSTRJob.findByIdAndUpdate(
@@ -41,6 +46,11 @@ exports.createCompareSTRWorkers = async (numWorkers) => {
         {
           status: JobStatus.COMPLETED,
           compareFile,
+          compareFile2,
+          compareFile3,
+          compareFile4,
+          compareFile5,
+          compareFile6,
           completionTime: new Date(),
         },
         { new: true }
