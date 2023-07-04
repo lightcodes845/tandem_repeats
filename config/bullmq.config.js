@@ -7,6 +7,9 @@ const config = {
   mergeSTRQueueName: process.env.MERGESTR_QUEUE_NAME || "mergestr",
   statSTRQueueName: process.env.STATSTR_QUEUE_NAME || "statstr",
   compareSTRQueueName: process.env.COMPARESTR_QUEUE_NAME || "comparestr",
+  qcSTRQueueName: process.env.QCSTR_QUEUE_NAME || "qcstr",
+  gangSTRQueueName: process.env.GANGSTR_QUEUE_NAME || "gangstr",
+  hipSTRQueueName: process.env.HIPSTR_QUEUE_NAME || "hipstr",
 
   connection: {
     host: process.env.REDIS_BULL_HOST || "localhost",

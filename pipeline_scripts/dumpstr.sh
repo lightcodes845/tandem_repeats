@@ -186,7 +186,7 @@ elif [ $vcftype=="gangstr" ]; then
 		args+=(--gangstr-expansion-prob-total $gangstr_expansion_prob_total)
 	fi
 
-	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}
+	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}/dump
 
 elif [ $vcftype=="advntr" ]; then
 	args=()
@@ -241,7 +241,7 @@ elif [ $vcftype=="advntr" ]; then
 		args+=(--advntr-min-ML $advntr_min_ML)
 	fi
 
-	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}
+	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}/dump
 
 elif [ $vcftype=="eh" ]; then
 	args=()
@@ -286,7 +286,7 @@ elif [ $vcftype=="eh" ]; then
 
 
 
-	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}
+	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}/dump
 
 elif [ $vcftype=="popstr" ]; then
 	args=()
@@ -334,7 +334,7 @@ elif [ $vcftype=="popstr" ]; then
 		args+=(--popstr-require-support $popstr_require_support)
 	fi
 
-	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}
+	${bin_dir}/dumpSTR --vcf $vcf --vcftype $vcftype --zip "${args[@]}" --out ${output_dir}/dump
 
 
 fi
