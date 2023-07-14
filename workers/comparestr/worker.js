@@ -69,7 +69,7 @@ module.exports = async (job) => {
       process.env.TR_WORKDIR,
       jobParams.jobUID,
       "input",
-      "test.txt"
+      "test.vcf"
     );
   }
 

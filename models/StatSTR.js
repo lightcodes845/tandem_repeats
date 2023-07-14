@@ -17,7 +17,7 @@ const StatSTRSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            enum: ["gangstr", "advntr", "hipstr", "auto"],
+            enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
             default: "auto",
         },
         samples: {

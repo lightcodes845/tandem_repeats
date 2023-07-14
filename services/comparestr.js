@@ -8,14 +8,15 @@ const { fileOrPathExists } = require("../utils/fileutils");
 
 exports.createJob = async (req, next, queue, user, email) => {
     // Test file
-    const testPath = "test.txt";
+
+    const testPath = "/home/dzumi/trFiles/test/NA12878_chr21_eh.sorted.vcf.gz";
 
     // validate input file
     const file = req.files.file;
     const file2 = req.files.file2;
 
 
-    if (req.body.useTest === "false") {
+    if (req.body.useTest === false) {
         if (!file) {
             return next(new ErrorResponse(`Please upload a file`, 400));
         }

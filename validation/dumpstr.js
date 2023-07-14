@@ -5,10 +5,10 @@ const dumpSTRSchema = Joi.object({
   useTest: Joi.boolean().required(),
   email: Joi.string().email(),
   vcftype: Joi.string()
-    .valid("gangstr", "advntr", "hipstr", "auto")
+    .valid("gangstr", "advntr", "hipstr", "auto", "popstr", "eh")
     .default("auto"),
   num_records: Joi.number().integer().allow("").optional(),
-  min_locus_rate: Joi.number().allow("").optional(),
+  min_locus_callrate: Joi.number().allow("").optional(),
   min_locus_hwep: Joi.number().allow("").optional(),
   min_locus_het: Joi.number().allow("").optional(),
   max_locus_het: Joi.number().allow("").optional(),

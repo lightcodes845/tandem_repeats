@@ -8,15 +8,15 @@ const { fileOrPathExists } = require("../utils/fileutils");
 
 exports.createJob = async (req, next, queue, user, email) => {
     // Test file
-    const testPath = "test.txt";
+
+    const testPath = "/home/dzumi/trFiles/test/trio_chr21_gangstr.sorted.vcf.gz";
 
     // validate input file
-    const file = req.files.file;
+    let file = "";
 
-    //**changes here */
-    const file2 = req.files.file;
 
-    if (req.body.useTest === "false") {
+    if (req.body.useTest === false) {
+        file = req.files.file;
         if (!file) {
             return next(new ErrorResponse(`Please upload a file`, 400));
         }
@@ -58,7 +58,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     let filepath = "";
     let longJob = false;
 
-    if (req.body.useTest === "true" && !file) {
+    if (req.body.useTest === true && !file) {
         filepath = testPath;
     } else {
         filepath = file.tempFilePath;
@@ -73,7 +73,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     req.body.inputFile = filepath;
 
     //**changes here */
-    req.body.inputFile2 = file2;
+    // req.body.inputFile2 = file2;
 
     req.body.status = JobStatus.QUEUED;
     req.body.longJob = longJob;

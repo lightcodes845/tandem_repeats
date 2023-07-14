@@ -16,7 +16,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     const file3 = req.files.file3;
 
 
-    if (req.body.useTest === "false") {
+    if (req.body.useTest === false) {
         if (!file) {
             return next(new ErrorResponse(`Please upload a file`, 400));
         }
@@ -82,7 +82,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     let filepath3 = "";
     let longJob = false;
 
-    if (req.body.useTest === "true" && !file) {
+    if (req.body.useTest === true && !file) {
         filepath = testPath;
     } else {
         filepath = file.tempFilePath;

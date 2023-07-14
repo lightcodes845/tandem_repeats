@@ -17,14 +17,14 @@ const DumpSTRSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      enum: ["gangstr", "advntr", "hipstr", "auto"],
+      enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
       default: "auto",
     },
     num_records: {
       type: Number,
       trim: true,
     },
-    min_locus_rate: {
+    min_locus_callrate: {
       type: Number,
       trim: true,
     },

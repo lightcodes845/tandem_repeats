@@ -17,14 +17,14 @@ const CompareSTRSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            enum: ["gangstr", "advntr", "hipstr", "auto"],
+            enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
             default: "auto",
         },
         vcftype2: {
             type: String,
             required: true,
             trim: true,
-            enum: ["gangstr", "advntr", "hipstr", "auto"],
+            enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
             default: "auto",
         },
         samples: {

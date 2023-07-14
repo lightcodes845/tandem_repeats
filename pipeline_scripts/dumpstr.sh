@@ -7,7 +7,7 @@ vcf=$1 #takes in a vcf file
 output_dir=$2 #output directory
 vcftype=$3 #options include {gangstr,advntr,hipstr,auto}default is auto
 num_records=$4 #integer
-min_locus_rate=$5 #float
+min_locus_callrate=$5 #float
 min_locus_hwep=$6 #float
 min_locus_het=$7 #float
 max_locus_het=$8 #float
@@ -46,8 +46,8 @@ if [ $vcftype=="auto" ]; then
 		args+=(--num-records $num_records)
 	fi
 
-	if [ -n "$min_locus_rate" ]; then
-		args+=(--min-locus-callrate $min_locus_rate)
+	if [ -n "$min_locus_callrate" ]; then
+		args+=(--min-locus-callrate $min_locus_callrate)
 	fi
 
 	if [ -n "$min_locus_hwep" ]; then
@@ -80,8 +80,8 @@ args=()
 		args+=(--num-records $num_records)
 	fi
 
-	if [ -n "$min_locus_rate" ]; then
-		args+=(--min-locus-callrate $min_locus_rate)
+	if [ -n "$min_locus_callrate" ]; then
+		args+=(--min-locus-callrate $min_locus_callrate)
 	fi
 
 	if [ -n "$min_locus_hwep" ]; then
@@ -137,8 +137,8 @@ elif [ $vcftype=="gangstr" ]; then
 		args+=(--num-records $num_records)
 	fi
 
-	if [ -n "$min_locus_rate" ]; then
-		args+=(--min-locus-callrate $min_locus_rate)
+	if [ -n "$min_locus_callrate" ]; then
+		args+=(--min-locus-callrate $min_locus_callrate)
 	fi
 
 	if [ -n "$min_locus_hwep" ]; then
@@ -194,8 +194,8 @@ elif [ $vcftype=="advntr" ]; then
 		args+=(--num-records $num_records)
 	fi
 
-	if [ -n "$min_locus_rate" ]; then
-		args+=(--min-locus-callrate $min_locus_rate)
+	if [ -n "$min_locus_callrate" ]; then
+		args+=(--min-locus-callrate $min_locus_callrate)
 	fi
 
 	if [ -n "$min_locus_hwep" ]; then
@@ -249,8 +249,8 @@ elif [ $vcftype=="eh" ]; then
 		args+=(--num-records $num_records)
 	fi
 
-	if [ -n "$min_locus_rate" ]; then
-		args+=(--min-locus-callrate $min_locus_rate)
+	if [ -n "$min_locus_callrate" ]; then
+		args+=(--min-locus-callrate $min_locus_callrate)
 	fi
 
 	if [ -n "$min_locus_hwep" ]; then
@@ -294,8 +294,8 @@ elif [ $vcftype=="popstr" ]; then
 		args+=(--num-records $num_records)
 	fi
 
-	if [ -n "$min_locus_rate" ]; then
-		args+=(--min-locus-callrate $min_locus_rate)
+	if [ -n "$min_locus_callrate" ]; then
+		args+=(--min-locus-callrate $min_locus_callrate)
 	fi
 
 	if [ -n "$min_locus_hwep" ]; then

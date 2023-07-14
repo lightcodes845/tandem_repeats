@@ -5,7 +5,7 @@ const qcSTRSchema = Joi.object({
     useTest: Joi.boolean().required(),
     email: Joi.string().email(),
     vcftype: Joi.string()
-        .valid("gangstr", "advntr", "hipstr", "auto")
+        .valid("gangstr", "advntr", "hipstr", "auto", "popstr", "eh")
         .default("auto"),
     period: Joi.number().integer().allow("").optional(),
     refbias_binsize: Joi.number().integer().allow("").optional(),

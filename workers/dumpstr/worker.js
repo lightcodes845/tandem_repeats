@@ -15,7 +15,7 @@ function getJobParameters(parameters) {
   return [
     String(parameters.vcftype),
     String(parameters.num_records ? parameters.num_records : ""),
-    String(parameters.min_locus_rate ? parameters.min_locus_rate : ""),
+    String(parameters.min_locus_callrate ? parameters.min_locus_callrate : ""),
     String(parameters.min_locus_hwep ? parameters.min_locus_hwep : ""),
     String(parameters.min_locus_het ? parameters.min_locus_het : ""),
     String(parameters.max_locus_het ? parameters.max_locus_het : ""),
@@ -86,7 +86,7 @@ module.exports = async (job) => {
       process.env.TR_WORKDIR,
       jobParams.jobUID,
       "input",
-      "test.txt"
+      "test.vcf"
     );
   }
 

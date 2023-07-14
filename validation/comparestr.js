@@ -5,10 +5,10 @@ const compareSTRSchema = Joi.object({
     useTest: Joi.boolean().required(),
     email: Joi.string().email(),
     vcftype1: Joi.string()
-        .valid("gangstr", "advntr", "hipstr", "auto")
+        .valid("gangstr", "advntr", "hipstr", "auto", "popstr", "eh")
         .default("auto"),
     vcftype2: Joi.string()
-        .valid("gangstr", "advntr", "hipstr", "auto")
+        .valid("gangstr", "advntr", "hipstr", "auto", "popstr", "eh")
         .default("auto"),
     samples: Joi.string().allow("").optional(),
     regions: Joi.string().allow("").optional(),

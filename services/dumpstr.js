@@ -8,12 +8,15 @@ const { fileOrPathExists } = require("../utils/fileutils");
 
 exports.createJob = async (req, next, queue, user, email) => {
   // Test file
-  const testPath = "test.txt";
+
+  const testPath = "/home/dzumi/trFiles/test/NA12878_chr21_advntr.sorted.vcf.gz";
 
   // validate input file
-  const file = req.files.file;
+  let file = "";
 
-  if (req.body.useTest === "false") {
+
+  if (req.body.useTest === false) {
+    file = req.files.file;
     if (!file) {
       return next(new ErrorResponse(`Please upload a file`, 400));
     }
@@ -55,7 +58,7 @@ exports.createJob = async (req, next, queue, user, email) => {
   let filepath = "";
   let longJob = false;
 
-  if (req.body.useTest === "true" && !file) {
+  if (req.body.useTest === true && !file) {
     filepath = testPath;
   } else {
     filepath = file.tempFilePath;
@@ -63,9 +66,11 @@ exports.createJob = async (req, next, queue, user, email) => {
       filepath,
       path.join(process.env.TR_WORKDIR, "temp", file.name)
     );
+
     filepath = path.join(process.env.TR_WORKDIR, "temp", file.name);
     longJob = file.size > 50 * 1024 * 1024;
   }
+
 
   req.body.inputFile = filepath;
   req.body.status = JobStatus.QUEUED;

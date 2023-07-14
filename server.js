@@ -7,12 +7,9 @@ const path = require("path");
 const errorHandler = require("./middlewares/error");
 
 // Route files
-const dumpstr = require("./routes/dumpstr");
 const auths = require("./routes/auths");
 const admin = require("./routes/admin");
-
-
-// *Route files for others
+const dumpstr = require("./routes/dumpstr");
 const mergestr = require("./routes/mergestr");
 const statstr = require("./routes/statstr");
 const qcstr = require("./routes/qcstr");
@@ -22,8 +19,6 @@ const hipstr = require("./routes/hipstr");
 
 const { connectDB } = require("./config/db");
 const { createDumpSTRWorkers } = require("./workers/dumpstr/main");
-
-//*others
 const { createMergeSTRWorkers } = require("./workers/mergestr/main");
 const { createStatSTRWorkers } = require("./workers/statstr/main");
 const { createQcSTRWorkers } = require("./workers/qcstr/main");
@@ -66,9 +61,6 @@ app.use(
 app.use("/api/v1/dumpstr", dumpstr);
 app.use("/api/v1/auths", auths);
 app.use("/api/v1/users", admin);
-
-
-//*Mount routers for others
 app.use("/api/v1/mergestr", mergestr);
 app.use("/api/v1/statstr", statstr);
 app.use("/api/v1/qcstr", qcstr);
@@ -82,8 +74,6 @@ app.use('/api/v1/results/home/dzumi/trFiles', express.static('/home/dzumi/trFile
 app.use(errorHandler);
 
 createDumpSTRWorkers(1);
-
-//*others
 createMergeSTRWorkers(1);
 createStatSTRWorkers(1);
 createQcSTRWorkers(1);

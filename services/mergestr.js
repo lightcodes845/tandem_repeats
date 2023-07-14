@@ -15,7 +15,7 @@ exports.createJob = async (req, next, queue, user, email) => {
 
     console.log(req.files);
 
-    if (req.body.useTest === "false") {
+    if (req.body.useTest === false) {
         if (!file) {
             return next(new ErrorResponse(`Please upload a file`, 400));
         }
@@ -57,7 +57,7 @@ exports.createJob = async (req, next, queue, user, email) => {
     let filepath = [];
     let longJob = false;
 
-    if (req.body.useTest === "true" && !file) {
+    if (req.body.useTest === true && !file) {
         filepath = testPath;
     } else {
         for (let index = 0; index < file.length; index++) {

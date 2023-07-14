@@ -2,8 +2,6 @@ const config = {
   concurrency: parseInt(process.env.QUEUE_CONCURRENCY || "1"),
   queueName: process.env.QUEUE_NAME || "tr_queue",
   dumpSTRQueueName: process.env.DUMPSTR_QUEUE_NAME || "dumpstr",
-
-  //*mergestr
   mergeSTRQueueName: process.env.MERGESTR_QUEUE_NAME || "mergestr",
   statSTRQueueName: process.env.STATSTR_QUEUE_NAME || "statstr",
   compareSTRQueueName: process.env.COMPARESTR_QUEUE_NAME || "comparestr",

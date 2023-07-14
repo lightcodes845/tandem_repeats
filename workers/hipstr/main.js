@@ -1,16 +1,16 @@
 const { Worker } = require("bullmq");
 const path = require("path");
 const config = require("../../config/bullmq.config");
-const { GangSTRJob, JobStatus } = require("../../models/GangSTR.jobs");
-const GangSTR = require("../../models/GangSTR");
+const { HipSTRJob, JobStatus } = require("../../models/HipSTR.jobs");
+const HipSTR = require("../../models/HipSTR");
 
 const processorFile = path.join(__dirname, "worker.js");
 
-exports.createGangSTRWorkers = async (numWorkers) => {
+exports.createHipSTRWorkers = async (numWorkers) => {
   for (let i = 0; i < numWorkers; i++) {
-    console.log("Creating GangSTR worker " + i);
+    console.log("Creating HipSTR worker " + i);
 
-    const worker = new Worker(config.gangSTRQueueName, processorFile, {
+    const worker = new Worker(config.hipSTRQueueName, processorFile, {
       connection: config.connection,
       limiter: config.limiter,
     });
@@ -20,7 +20,7 @@ exports.createGangSTRWorkers = async (numWorkers) => {
 
       // save in mongo database
       // job is complete
-      const parameters = await GangSTR.findOne({
+      const parameters = await HipSTR.findOne({
         job: job.data.jobId,
       }).exec();
 
@@ -29,28 +29,28 @@ exports.createGangSTRWorkers = async (numWorkers) => {
       const pathToOutputDir = path.join(
         process.env.TR_WORKDIR,
         job.data.jobUID,
-        "gangstr",
+        "hipstr",
         "output"
       );
 
-      const gangFile = `${pathToOutputDir}/compare-samplecompare.tab`;
-      const gangFile2 = `${pathToOutputDir}/compare-samplecompare.pdf`;
-      const gangFile3 = `${pathToOutputDir}/compare-overall.tab`;
-      const gangFile4 = `${pathToOutputDir}/compare-locuscompare.tab`;
-      const gangFile5 = `${pathToOutputDir}/compare-locuscompare.pdf`;
-      const gangFile6 = `${pathToOutputDir}/compare-bubble-periodALL.pdf`;
+      const hipFile = `${pathToOutputDir}/compare-samplecompare.tab`;
+      const hipFile2 = `${pathToOutputDir}/compare-samplecompare.pdf`;
+      const hipFile3 = `${pathToOutputDir}/compare-overall.tab`;
+      const hipFile4 = `${pathToOutputDir}/compare-locuscompare.tab`;
+      const hipFile5 = `${pathToOutputDir}/compare-locuscompare.pdf`;
+      const hipFile6 = `${pathToOutputDir}/compare-bubble-periodALL.pdf`;
 
 
-      const finishedJob = await GangSTRJob.findByIdAndUpdate(
+      const finishedJob = await HipSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.COMPLETED,
-          gangFile,
-          gangFile2,
-          gangFile3,
-          gangFile4,
-          gangFile5,
-          gangFile6,
+          hipFile,
+          hipFile2,
+          hipFile3,
+          hipFile4,
+          hipFile5,
+          hipFile6,
           completionTime: new Date(),
         },
         { new: true }
@@ -62,7 +62,7 @@ exports.createGangSTRWorkers = async (numWorkers) => {
       console.log("worker " + i + " failed " + job.failedReason);
       //update job in database as failed
       //save in mongo database
-      const finishedJob = await GangSTRJob.findByIdAndUpdate(
+      const finishedJob = await HipSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.FAILED,
