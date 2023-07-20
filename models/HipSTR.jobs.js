@@ -34,11 +34,6 @@ const HipSTRJobSchema = new mongoose.Schema(
             required: [true, "Please add a input filename"],
             trim: true,
         },
-        inputFile3: {
-            type: String,
-            required: [true, "Please add a input filename"],
-            trim: true,
-        },
 
 
         hipFile: {
@@ -47,18 +42,6 @@ const HipSTRJobSchema = new mongoose.Schema(
         },
 
         hipFile2: {
-            type: String,
-            trim: true,
-        },
-        hipFile3: {
-            type: String,
-            trim: true,
-        },
-        hipFile4: {
-            type: String,
-            trim: true,
-        },
-        hipFile5: {
             type: String,
             trim: true,
         },

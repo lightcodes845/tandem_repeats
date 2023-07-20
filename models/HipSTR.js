@@ -14,19 +14,26 @@ const HipSTRSchema = new mongoose.Schema(
             required: true,
         },
         haploid_chrs: {
-            type: Number,
+            type: String,
             required: true,
             trim: true,
             enum: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "all"],
             default: "all",
         },
-        use_unpaired: {
+        fasta: {
             type: String,
             required: true,
             trim: true,
-            enum: ["True", "False"],
-            default: "False",
+            enum: ["hg19", "hg38"],
+            default: "hg19",
         },
+        // use_unpaired: {
+        //     type: String,
+        //     // required: true,
+        //     trim: true,
+        //     enum: ["True", "False"],
+        //     default: "False",
+        // },
         bam_samps: {
             type: String,
             trim: true,

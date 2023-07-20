@@ -14,7 +14,8 @@ function sleep(ms) {
 function getJobParameters(parameters) {
   return [
     String(parameters.haploid_chrs),
-    String(parameters.use_unpaired),
+    String(parameters.fasta),
+    // String(parameters.use_unpaired),
     String(parameters.bam_samps ? parameters.bam_samps : ""),
     String(parameters.bam_libs ? parameters.bam_libs : ""),
     String(parameters.min_reads ? parameters.min_reads : ""),
@@ -44,32 +45,36 @@ module.exports = async (job) => {
   //--1
   let fileInput = jobParams.inputFile;
   let fileInput2 = jobParams.inputFile2;
-  let fileInput3 = jobParams.inputFile3;
+
 
 
   //create input file and folder
-  let filename;
+  let filename = [];
   let filename2;
-  let filename3;
+
 
   //--2
   //extract file name
+  const tempPaths = fileInput.split(',');
   if (parameters.useTest === false) {
-    const name = fileInput.split(/(\\|\/)/g).pop();
-    filename = path.join(
-      process.env.TR_WORKDIR,
-      jobParams.jobUID,
-      "input",
-      name
-    );
+    tempPaths.forEach((dd) => {
+      const name = dd.split(/(\\|\/)/g).pop();
+      filename.push(path.join(
+        process.env.TR_WORKDIR,
+        jobParams.jobUID,
+        "input",
+        name
+      ));
+    })
   } else {
     filename = path.join(
       process.env.TR_WORKDIR,
       jobParams.jobUID,
       "input",
-      "test.txt"
+      "test.vcf"
     );
   }
+
 
   if (fileInput2) {
     const name2 = fileInput2.split(/(\\|\/)/g).pop();
@@ -81,46 +86,36 @@ module.exports = async (job) => {
     );
   }
 
-  if (fileInput3) {
-    const name3 = fileInput3.split(/(\\|\/)/g).pop();
-    filename3 = path.join(
-      process.env.TR_WORKDIR,
-      jobParams.jobUID,
-      "input",
-      name3
-    );
-  }
+
   //move file to input folder
-  fs.mkdirSync(path.dirname(filename), { recursive: true });
-  fs.copyFileSync(fileInput, filename);
+  fs.mkdirSync(path.dirname(filename[0]), { recursive: true });
+  filename.forEach((dd, i) => {
+    fs.copyFileSync(tempPaths[i], dd);
+  })
 
   if (filename2) {
     fs.copyFileSync(fileInput2, filename2);
   }
-  if (filename3) {
-    fs.copyFileSync(fileInput3, filename3);
-  }
+
 
   if (parameters.useTest === false) {
-    deleteFileorFolder(jobParams.inputFile).then(() => {
-      console.log("deleted");
-    });
+    tempPaths.forEach((dd) => {
+      deleteFileorFolder(dd).then(() => {
+        console.log("deleted");
+      });
+    })
     if (filename2) {
       deleteFileorFolder(jobParams.inputFile2).then(() => {
         console.log("deleted");
       });
     }
-    if (filename3) {
-      deleteFileorFolder(jobParams.inputFile3).then(() => {
-        console.log("deleted");
-      });
-    }
+
   }
 
   //assemble job parameters
-  const pathToInputFile = filename;
+  const pathToInputFile = filename.join(',');
   const pathToInputFile2 = filename2;
-  const pathToInputFile3 = filename3;
+
 
   const pathToOutputDir = path.join(
     process.env.TR_WORKDIR,
@@ -129,7 +124,7 @@ module.exports = async (job) => {
     "output"
   );
   const jobParameters = getJobParameters(parameters);
-  jobParameters.unshift(pathToInputFile, pathToInputFile2, pathToInputFile3, pathToOutputDir);
+  jobParameters.unshift(pathToInputFile, pathToInputFile2, pathToOutputDir);
   // console.log(jobParameters);
   console.log("Job Param");
   console.log(jobParameters);
@@ -141,9 +136,9 @@ module.exports = async (job) => {
     job.data.jobId,
     {
       status: JobStatus.RUNNING,
-      inputFile: filename,
+      inputFile: filename.join(','),
       inputFile2: filename2,
-      inputFile3: filename3,
+
     },
     { new: true }
   );
@@ -169,27 +164,15 @@ module.exports = async (job) => {
   console.log(error_msg);
 
   const hipstr = await fileOrPathExists(
-    path.join(pathToOutputDir, "hip-samplehip.tab")
+    path.join(pathToOutputDir, "hipstr_calls.vcf.gz")
   );
   const hipstr2 = await fileOrPathExists(
-    path.join(pathToOutputDir, "hip-samplehip.pdf")
-  );
-  const hipstr3 = await fileOrPathExists(
-    path.join(pathToOutputDir, "hip-overall.tab")
-  );
-  const hipstr4 = await fileOrPathExists(
-    path.join(pathToOutputDir, "hip-locuship.tab")
-  );
-  const hipstr5 = await fileOrPathExists(
-    path.join(pathToOutputDir, "hip-locuship.pdf")
-  );
-  const hipstr6 = await fileOrPathExists(
-    path.join(pathToOutputDir, "hip-bubble-periodALL.pdf")
+    path.join(pathToOutputDir, "hipstr_calls.viz.gz")
   );
 
   closeDB();
 
-  if (hipstr || hipstr2 || hipstr3 || hipstr4 || hipstr5 || hipstr6) {
+  if (hipstr || hipstr2) {
     console.log(`${job?.data?.jobName} spawn done!`);
     return true;
   } else {

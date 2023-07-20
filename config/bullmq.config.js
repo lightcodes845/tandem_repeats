@@ -8,6 +8,7 @@ const config = {
   qcSTRQueueName: process.env.QCSTR_QUEUE_NAME || "qcstr",
   gangSTRQueueName: process.env.GANGSTR_QUEUE_NAME || "gangstr",
   hipSTRQueueName: process.env.HIPSTR_QUEUE_NAME || "hipstr",
+  trpSTRQueueName: process.env.TRPSTR_QUEUE_NAME || " trpstr",
 
   connection: {
     host: process.env.REDIS_BULL_HOST || "localhost",

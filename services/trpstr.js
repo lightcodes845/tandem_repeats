@@ -2,8 +2,8 @@ const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const fs = require("fs");
 const ErrorResponse = require("../utils/errorResponse");
-const HipSTR = require("../models/HipSTR");
-const { HipSTRJob, JobStatus } = require("../models/HipSTR.jobs");
+const TrpSTR = require("../models/TrpSTR");
+const { TrpSTRJob, JobStatus } = require("../models/TrpSTR.jobs");
 const { fileOrPathExists } = require("../utils/fileutils");
 
 exports.createJob = async (req, next, queue, user, email) => {
@@ -44,8 +44,6 @@ exports.createJob = async (req, next, queue, user, email) => {
         }
     }
 
-
-
     if (!req.user && !req.body.email) {
         return next(
             new ErrorResponse(`Please sign in or provide an email for this job`, 400)
@@ -67,7 +65,6 @@ exports.createJob = async (req, next, queue, user, email) => {
     } else {
         return next(new ErrorResponse(`Problem with creating job workspace`, 500));
     }
-
 
     let filepath = [];
     let filepath2 = "";
@@ -98,18 +95,16 @@ exports.createJob = async (req, next, queue, user, email) => {
         longJob = longJob || file2.size > 50 * 1024 * 1024;
     }
 
-
     req.body.inputFile = filepath.join(',');
     req.body.inputFile2 = filepath2;
-
     req.body.status = JobStatus.QUEUED;
     req.body.longJob = longJob;
     req.body.jobUID = jobUID;
 
     //   Create job
 
-    const sessionJob = await HipSTRJob.startSession();
-    const sessionModel = await HipSTR.startSession();
+    const sessionJob = await TrpSTRJob.startSession();
+    const sessionModel = await TrpSTR.startSession();
     sessionJob.startTransaction();
     sessionModel.startTransaction();
 
@@ -117,12 +112,12 @@ exports.createJob = async (req, next, queue, user, email) => {
     try {
         if (req.user) {
             req.body.user = req.user.id;
-            newJob = await HipSTRJob.create([req.body], { session: sessionJob });
+            newJob = await TrpSTRJob.create([req.body], { session: sessionJob });
         }
 
         if (req.body.email) {
             req.body.email = req.body.email.toLowerCase();
-            newJob = await HipSTRJob.create([req.body], { session: sessionJob });
+            newJob = await TrpSTRJob.create([req.body], { session: sessionJob });
         }
 
         if (!newJob) {
@@ -131,7 +126,7 @@ exports.createJob = async (req, next, queue, user, email) => {
 
         //   Create job parameters
         req.body.job = newJob[0]._id;
-        await HipSTR.create([req.body], { session: sessionModel });
+        await TrpSTR.create([req.body], { session: sessionModel });
 
         //   Add job to queue
         if (user) {

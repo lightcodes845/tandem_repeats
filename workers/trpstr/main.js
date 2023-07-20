@@ -1,16 +1,16 @@
 const { Worker } = require("bullmq");
 const path = require("path");
 const config = require("../../config/bullmq.config");
-const { HipSTRJob, JobStatus } = require("../../models/HipSTR.jobs");
-const HipSTR = require("../../models/HipSTR");
+const { TrpSTRJob, JobStatus } = require("../../models/TrpSTR.jobs");
+const TrpSTR = require("../../models/TrpSTR");
 
 const processorFile = path.join(__dirname, "worker.js");
 
-exports.createHipSTRWorkers = async (numWorkers) => {
+exports.createTrpSTRWorkers = async (numWorkers) => {
   for (let i = 0; i < numWorkers; i++) {
-    console.log("Creating HipSTR worker " + i);
+    console.log("Creating TrpSTR worker " + i);
 
-    const worker = new Worker(config.hipSTRQueueName, processorFile, {
+    const worker = new Worker(config.trpSTRQueueName, processorFile, {
       connection: config.connection,
       limiter: config.limiter,
     });
@@ -20,7 +20,7 @@ exports.createHipSTRWorkers = async (numWorkers) => {
 
       // save in mongo database
       // job is complete
-      const parameters = await HipSTR.findOne({
+      const parameters = await TrpSTR.findOne({
         job: job.data.jobId,
       }).exec();
 
@@ -29,22 +29,28 @@ exports.createHipSTRWorkers = async (numWorkers) => {
       const pathToOutputDir = path.join(
         process.env.TR_WORKDIR,
         job.data.jobUID,
-        "hipstr",
+        "trpstr",
         "output"
       );
 
-      const hipFile = `${pathToOutputDir}/hipstr_calls.vcf.gz`;
-      const hipFile2 = `${pathToOutputDir}/hipstr_calls.viz.gz`;
+      const trpFile = `${pathToOutputDir}/trp-sampletrp.tab`;
+      const trpFile2 = `${pathToOutputDir}/trp-sampletrp.pdf`;
+      const trpFile3 = `${pathToOutputDir}/trp-overall.tab`;
+      const trpFile4 = `${pathToOutputDir}/trp-locustrp.tab`;
+      const trpFile5 = `${pathToOutputDir}/trp-locustrp.pdf`;
+      const trpFile6 = `${pathToOutputDir}/trp-bubble-periodALL.pdf`;
 
 
-
-      const finishedJob = await HipSTRJob.findByIdAndUpdate(
+      const finishedJob = await TrpSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.COMPLETED,
-          hipFile,
-          hipFile2,
-
+          trpFile,
+          trpFile2,
+          trpFile3,
+          trpFile4,
+          trpFile5,
+          trpFile6,
           completionTime: new Date(),
         },
         { new: true }
@@ -56,7 +62,7 @@ exports.createHipSTRWorkers = async (numWorkers) => {
       console.log("worker " + i + " failed " + job.failedReason);
       //update job in database as failed
       //save in mongo database
-      const finishedJob = await HipSTRJob.findByIdAndUpdate(
+      const finishedJob = await TrpSTRJob.findByIdAndUpdate(
         job.data.jobId,
         {
           status: JobStatus.FAILED,
@@ -91,3 +97,7 @@ exports.createHipSTRWorkers = async (numWorkers) => {
     console.log("Worker " + i + " created");
   }
 };
+
+
+
+
