@@ -37,154 +37,107 @@ const TrpSTRJobSchema = new mongoose.Schema(
         },
 
 
-        hipFile: {
+        trpFile: {
             type: String,
             trim: true,
         },
 
-        hipFile2: {
-            type: String,
-            trim: true,
-        },
-        hipFile3: {
-            type: String,
-            trim: true,
-        },
-        hipFile4: {
-            type: String,
-            trim: true,
-        },
-        hipFile5: {
+        trpFile2: {
             type: String,
             trim: true,
         },
 
         // section b first qcstr
-        inputFile: {
-            type: String,
-            required: [true, "Please add a input filename"],
-            trim: true,
-        },
-
-        qcFile: {
+        trpFile3: {
             type: String,
             trim: true,
         },
-
-
-        qcFile2: {
+        trpFile4: {
+            type: String,
+            trim: true,
+        },
+        trpFile5: {
             type: String,
             trim: true,
         },
 
-        qcFile3: {
+        trpFile6: {
+            type: String,
+            trim: true,
+        },
+        trpFile7: {
+            type: String,
+            trim: true,
+        },
+        trpFile8: {
+            type: String,
+            trim: true,
+        },
+        trpFile9: {
+            type: String,
+            trim: true,
+        },
+        trpFile10: {
+            type: String,
+            trim: true,
+        },
+        trpFile11: {
+            type: String,
+            trim: true,
+        },
+        trpFile12: {
+            type: String,
+            trim: true,
+        },
+        // section c
+        trpFile13: {
+            type: String,
+            trim: true,
+        },
+        trpFile14: {
             type: String,
             trim: true,
         },
 
-        qcFile4: {
+        // section d
+        trpFile15: {
             type: String,
             trim: true,
         },
-
-        qcFile5: {
+        trpFile16: {
             type: String,
             trim: true,
         },
-
-        qcFile6: {
+        trpFile17: {
             type: String,
             trim: true,
         },
-
-        qcFile7: {
+        trpFile18: {
             type: String,
             trim: true,
         },
-
-        qcFile8: {
+        trpFile19: {
             type: String,
             trim: true,
         },
-
-        qcFile9: {
+        trpFile20: {
             type: String,
             trim: true,
         },
-
-        // section c dumpstr
-        inputFile: {
-            type: String,
-            required: [true, "Please add a input filename"],
-            trim: true,
-        },
-
-        dumpFile: {
+        trpFile21: {
             type: String,
             trim: true,
         },
-
-        //   section d second qcstr
-        inputFile: {
-            type: String,
-            required: [true, "Please add a input filename"],
-            trim: true,
-        },
-
-        qcFile: {
+        trpFile22: {
             type: String,
             trim: true,
         },
-
-
-        qcFile2: {
+        // section e
+        trpFile23: {
             type: String,
             trim: true,
         },
-
-        qcFile3: {
-            type: String,
-            trim: true,
-        },
-
-        qcFile4: {
-            type: String,
-            trim: true,
-        },
-
-        qcFile5: {
-            type: String,
-            trim: true,
-        },
-
-        qcFile6: {
-            type: String,
-            trim: true,
-        },
-
-        qcFile7: {
-            type: String,
-            trim: true,
-        },
-
-        qcFile8: {
-            type: String,
-            trim: true,
-        },
-
-        qcFile9: {
-            type: String,
-            trim: true,
-        },
-
-        // section e statstr
-        inputFile: {
-            type: String,
-            required: [true, "Please add a input filename"],
-            trim: true,
-        },
-
-        statFile: {
+        trpFile24: {
             type: String,
             trim: true,
         },

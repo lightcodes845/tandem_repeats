@@ -22,7 +22,6 @@ files=$bams
 for i in ${bams//,/ }
 do
 samtools index "$i"
-
 done
 
 
@@ -70,7 +69,6 @@ echo $bam_libs
 echo $min_reads
 
 if [ "$fasta" = "hg19" ]; then
-echo ${bin_dir}/HipSTR --bams "$bams" --fasta "${input_dir}/hg19.fa" --regions "$regions" --viz-out "${output_dir}/hipstr_calls.viz.gz" --log hipstr_calls.log  --def-stutter-model --output-filters "${args[@]}" --str-vcf "${output_dir}/hipstr_calls.vcf.gz"
 ${bin_dir}/HipSTR --bams "$bams" --fasta "${input_dir}/hg19.fa" --regions "$regions" --viz-out "${output_dir}/hipstr_calls.viz.gz" --log hipstr_calls.log  --def-stutter-model --output-filters "${args[@]}" --str-vcf "${output_dir}/hipstr_calls.vcf.gz"
 
 elif [ "$fasta" = "hg38" ]; then

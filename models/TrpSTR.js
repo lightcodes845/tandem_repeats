@@ -28,13 +28,13 @@ const TrpSTRSchema = new mongoose.Schema(
             enum: ["hg19", "hg38"],
             default: "hg19",
         },
-        use_unpaired: {
-            type: String,
-            required: true,
-            trim: true,
-            enum: ["True", "False"],
-            default: "False",
-        },
+        // use_unpaired: {
+        //     type: String,
+        //     required: true,
+        //     trim: true,
+        //     enum: ["True", "False"],
+        //     default: "False",
+        // },
         bam_samps: {
             type: String,
             trim: true,
@@ -49,51 +49,51 @@ const TrpSTRSchema = new mongoose.Schema(
         },
 
         // section B qcstr
-        vcftype: {
-            type: String,
-            required: true,
-            trim: true,
-            enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
-            default: "auto",
-        },
-        period: {
+        // vcftype: {
+        //     type: String,
+        //     required: true,
+        //     trim: true,
+        //     enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
+        //     default: "auto",
+        // },
+        period_qcstrA: {
             type: Number,
             trim: true,
         },
-        refbias_binsize: {
+        refbias_binsize_qcstrA: {
             type: Number,
             trim: true,
         },
-        refbias_metric: {
+        refbias_metric_qcstrA: {
             type: String,
             required: true,
             trim: true,
             enum: ["mean", "medium"],
             default: "mean",
         },
-        refbias_mingts: {
+        refbias_mingts_qcstrA: {
             type: Number,
             trim: true,
         },
 
 
-        refbias_xrange_min: {
+        refbias_xrange_min_qcstrA: {
             type: Number,
             trim: true,
         },
-        refbias_xrange_max: {
+        refbias_xrange_max_qcstrA: {
             type: Number,
             trim: true,
         },
 
         // section C dumpstr
-        vcftype: {
-            type: String,
-            required: true,
-            trim: true,
-            enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
-            default: "auto",
-        },
+        // vcftype: {
+        //     type: String,
+        //     required: true,
+        //     trim: true,
+        //     enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
+        //     default: "auto",
+        // },
         num_records: {
             type: Number,
             trim: true,
@@ -146,130 +146,130 @@ const TrpSTRSchema = new mongoose.Schema(
             type: Number,
             trim: true,
         },
-        gangstr_min_call_DPl: {
-            type: Number,
-            trim: true,
-        },
-        gangstr_max_call_D: {
-            type: Number,
-            trim: true,
-        },
-        gangstr_min_call_Q: {
-            type: Number,
-            trim: true,
-        },
-        gangstr_expansion_prob_het: {
-            type: Number,
-            trim: true,
-        },
-        gangstr_expansion_prob_hom: {
-            type: Number,
-            trim: true,
-        },
-        gangstr_expansion_prob_total: {
-            type: Number,
-            trim: true,
-        },
-        advntr_min_call_DP: {
-            type: Number,
-            trim: true,
-        },
-        advntr_max_call_DP: {
-            type: Number,
-            trim: true,
-        },
-        advntr_min_spanning: {
-            type: Number,
-            trim: true,
-        },
-        advntr_min_flanking: {
-            type: Number,
-            trim: true,
-        },
-        advntr_min_ML: {
-            type: Number,
-            trim: true,
-        },
-        eh_min_call_LC: {
-            type: Number,
-            trim: true,
-        },
-        eh_max_call_LC: {
-            type: Number,
-            trim: true,
-        },
-        popstr_min_call_DP: {
-            type: Number,
-            trim: true,
-        },
-        eh_max_call_LC: {
-            type: Number,
-            trim: true,
-        },
-        eh_max_call_LC: {
-            type: Number,
-            trim: true,
-        },
-        popstr_min_call_DP: {
-            type: Number,
-            trim: true,
-        },
-        popstr_max_call_DP: {
-            type: Number,
-            trim: true,
-        },
-        popstr_require_support: {
-            type: Number,
-            trim: true,
-        },
+        // gangstr_min_call_DPl: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // gangstr_max_call_D: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // gangstr_min_call_Q: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // gangstr_expansion_prob_het: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // gangstr_expansion_prob_hom: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // gangstr_expansion_prob_total: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // advntr_min_call_DP: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // advntr_max_call_DP: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // advntr_min_spanning: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // advntr_min_flanking: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // advntr_min_ML: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // eh_min_call_LC: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // eh_max_call_LC: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // popstr_min_call_DP: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // eh_max_call_LC: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // eh_max_call_LC: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // popstr_min_call_DP: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // popstr_max_call_DP: {
+        //     type: Number,
+        //     trim: true,
+        // },
+        // popstr_require_support: {
+        //     type: Number,
+        //     trim: true,
+        // },
 
 
         // section D second qcstr
-        vcftype: {
-            type: String,
-            required: true,
-            trim: true,
-            enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
-            default: "auto",
-        },
-        period: {
+        // vcftype: {
+        //     type: String,
+        //     required: true,
+        //     trim: true,
+        //     enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
+        //     default: "auto",
+        // },
+        period_qcstrB: {
             type: Number,
             trim: true,
         },
-        refbias_binsize: {
+        refbias_binsize_qcstrB: {
             type: Number,
             trim: true,
         },
-        refbias_metric: {
+        refbias_metric_qcstrB: {
             type: String,
             required: true,
             trim: true,
             enum: ["mean", "medium"],
             default: "mean",
         },
-        refbias_mingts: {
+        refbias_mingts_qcstrB: {
             type: Number,
             trim: true,
         },
 
 
-        refbias_xrange_min: {
+        refbias_xrange_min_qcstrB: {
             type: Number,
             trim: true,
         },
-        refbias_xrange_max: {
+        refbias_xrange_max_qcstrB: {
             type: Number,
             trim: true,
         },
 
         // section e statstr
-        vcftype: {
-            type: String,
-            required: true,
-            trim: true,
-            enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
-            default: "auto",
-        },
+        // vcftype: {
+        //     type: String,
+        //     required: true,
+        //     trim: true,
+        //     enum: ["gangstr", "advntr", "hipstr", "auto", "popstr", "eh"],
+        //     default: "auto",
+        // },
         samples: {
             type: String,
             trim: true,

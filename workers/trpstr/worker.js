@@ -17,20 +17,21 @@ function getJobParameters(parameters) {
     // section A hipstr
     String(parameters.haploid_chrs),
     String(parameters.fasta),
-    String(parameters.use_unpaired),
+    // String(parameters.use_unpaired),
     String(parameters.bam_samps ? parameters.bam_samps : ""),
     String(parameters.bam_libs ? parameters.bam_libs : ""),
     String(parameters.min_reads ? parameters.min_reads : ""),
+
     // section b first qcstr
-    String(parameters.vcftype),
-    String(parameters.period ? parameters.period : ""),
-    String(parameters.refbias_binsize ? parameters.refbias_binsize : ""),
-    String(parameters.refbias_metric ? parameters.refbias_metric : ""),
-    String(parameters.refbias_mingts ? parameters.refbias_mingts : ""),
-    String(parameters.refbias_xrange_min ? parameters.refbias_xrange_min : ""),
-    String(parameters.refbias_xrange_max ? parameters.refbias_xrange_max : ""),
+
+    String(parameters.period_qcstrA ? parameters.period_qcstrA : ""),
+    String(parameters.refbias_binsize_qcstrA ? parameters.refbias_binsize_qcstrA : ""),
+    String(parameters.refbias_metric_qcstrA ? parameters.refbias_metric_qcstrA : ""),
+    String(parameters.refbias_mingts_qcstrA ? parameters.refbias_mingts_qcstrA : ""),
+    String(parameters.refbias_xrange_min_qcstrA ? parameters.refbias_xrange_min_qcstrA : ""),
+    String(parameters.refbias_xrange_max_qcstrA ? parameters.refbias_xrange_max_qcstrA : ""),
     // section c dumpstr
-    String(parameters.vcftype),
+    // String(parameters.vcftype),
     String(parameters.num_records ? parameters.num_records : ""),
     String(parameters.min_locus_callrate ? parameters.min_locus_callrate : ""),
     String(parameters.min_locus_hwep ? parameters.min_locus_hwep : ""),
@@ -44,34 +45,34 @@ function getJobParameters(parameters) {
     String(parameters.hipstr_min_call_DP ? parameters.hipstr_min_call_DP : ""),
     String(parameters.hipstr_max_call_DP ? parameters.hipstr_max_call_DP : ""),
     String(parameters.hipstr_min_call_Q ? parameters.hipstr_min_call_Q : ""),
-    String(parameters.gangstr_min_call_DPl ? parameters.gangstr_min_call_DPl : ""),
-    String(parameters.gangstr_max_call_D ? parameters.gangstr_max_call_D : ""),
-    String(parameters.gangstr_min_call_Q ? parameters.gangstr_min_call_Q : ""),
-    String(parameters.gangstr_expansion_prob_het ? parameters.gangstr_expansion_prob_het : ""),
-    String(parameters.gangstr_expansion_prob_hom ? parameters.gangstr_expansion_prob_hom : ""),
-    String(parameters.gangstr_expansion_prob_total ? parameters.gangstr_expansion_prob_total : ""),
-    String(parameters.advntr_min_call_DP ? parameters.advntr_min_call_DP : ""),
-    String(parameters.advntr_max_call_DP ? parameters.advntr_max_call_DP : ""),
-    String(parameters.advntr_min_spanning ? parameters.advntr_min_spanning : ""),
-    String(parameters.advntr_min_flanking ? parameters.advntr_min_flanking : ""),
-    String(parameters.advntr_min_ML ? parameters.advntr_min_ML : ""),
-    String(parameters.eh_min_call_LC ? parameters.eh_min_call_LC : ""),
-    String(parameters.eh_max_call_LC ? parameters.eh_max_call_LC : ""),
-    String(parameters.popstr_min_call_DP ? parameters.popstr_min_call_DP : ""),
-    String(parameters.popstr_max_call_DP ? parameters.popstr_max_call_DP : ""),
-    String(parameters.popstr_require_support ? parameters.popstr_require_support : ""),
+    // String(parameters.gangstr_min_call_DPl ? parameters.gangstr_min_call_DPl : ""),
+    // String(parameters.gangstr_max_call_D ? parameters.gangstr_max_call_D : ""),
+    // String(parameters.gangstr_min_call_Q ? parameters.gangstr_min_call_Q : ""),
+    // String(parameters.gangstr_expansion_prob_het ? parameters.gangstr_expansion_prob_het : ""),
+    // String(parameters.gangstr_expansion_prob_hom ? parameters.gangstr_expansion_prob_hom : ""),
+    // String(parameters.gangstr_expansion_prob_total ? parameters.gangstr_expansion_prob_total : ""),
+    // String(parameters.advntr_min_call_DP ? parameters.advntr_min_call_DP : ""),
+    // String(parameters.advntr_max_call_DP ? parameters.advntr_max_call_DP : ""),
+    // String(parameters.advntr_min_spanning ? parameters.advntr_min_spanning : ""),
+    // String(parameters.advntr_min_flanking ? parameters.advntr_min_flanking : ""),
+    // String(parameters.advntr_min_ML ? parameters.advntr_min_ML : ""),
+    // String(parameters.eh_min_call_LC ? parameters.eh_min_call_LC : ""),
+    // String(parameters.eh_max_call_LC ? parameters.eh_max_call_LC : ""),
+    // String(parameters.popstr_min_call_DP ? parameters.popstr_min_call_DP : ""),
+    // String(parameters.popstr_max_call_DP ? parameters.popstr_max_call_DP : ""),
+    // String(parameters.popstr_require_support ? parameters.popstr_require_support : ""),
 
     // section d second qcstr
-    String(parameters.vcftype),
-    String(parameters.period ? parameters.period : ""),
-    String(parameters.refbias_binsize ? parameters.refbias_binsize : ""),
-    String(parameters.refbias_metric ? parameters.refbias_metric : ""),
-    String(parameters.refbias_mingts ? parameters.refbias_mingts : ""),
-    String(parameters.refbias_xrange_min ? parameters.refbias_xrange_min : ""),
-    String(parameters.refbias_xrange_max ? parameters.refbias_xrange_max : ""),
+    // String(parameters.vcftype),
+    String(parameters.period_qcstrB ? parameters.period_qcstrB : ""),
+    String(parameters.refbias_binsize_qcstrB ? parameters.refbias_binsize_qcstrB : ""),
+    String(parameters.refbias_metric_qcstrB ? parameters.refbias_metric_qcstrB : ""),
+    String(parameters.refbias_mingts_qcstrB ? parameters.refbias_mingts_qcstrB : ""),
+    String(parameters.refbias_xrange_min_qcstrB ? parameters.refbias_xrange_min_qcstrB : ""),
+    String(parameters.refbias_xrange_max_qcstrB ? parameters.refbias_xrange_max_qcstrB : ""),
 
     // section e statstr
-    String(parameters.vcftype),
+    // String(parameters.vcftype),
     String(parameters.samples ? parameters.samples : ""),
     String(parameters.sample_prefixes ? parameters.sample_prefixes : ""),
     String(parameters.region ? parameters.region : ""),
@@ -216,23 +217,90 @@ module.exports = async (job) => {
   const error_msg = jobSpawn?.stderr?.toString();
   console.log(error_msg);
 
+  // section A
   const trpstr = await fileOrPathExists(
-    path.join(pathToOutputDir, "trp-sampletrp.tab")
+    path.join(pathToOutputDir, "hipstr_calls.vcf.gz")
   );
   const trpstr2 = await fileOrPathExists(
-    path.join(pathToOutputDir, "trp-sampletrp.pdf")
+    path.join(pathToOutputDir, "hipstr_calls.viz.gz")
   );
+
+  // section b
   const trpstr3 = await fileOrPathExists(
-    path.join(pathToOutputDir, "trp-overall.tab")
+    path.join(pathToOutputDir, "first_qc-diffref-bias.pdf")
   );
   const trpstr4 = await fileOrPathExists(
-    path.join(pathToOutputDir, "trp-locustrp.tab")
+    path.join(pathToOutputDir, "first_qc-diffref-histogram.pdf")
   );
   const trpstr5 = await fileOrPathExists(
-    path.join(pathToOutputDir, "trp-locustrp.pdf")
+    path.join(pathToOutputDir, "first_qc-quality-locus-stratified.pdf")
   );
   const trpstr6 = await fileOrPathExists(
-    path.join(pathToOutputDir, "trp-bubble-periodALL.pdf")
+    path.join(pathToOutputDir, "first_qc-quality-per-call.pdf")
+  );
+  const trpstr7 = await fileOrPathExists(
+    path.join(pathToOutputDir, "first_qc-quality-per-locus.pdf")
+  );
+  const trpstr8 = await fileOrPathExists(
+    path.join(pathToOutputDir, "first_qc-quality-per-sample.pdf")
+  );
+
+  const trpstr9 = await fileOrPathExists(
+    path.join(pathToOutputDir, "first_qc-quality-sample-stratified.pdf")
+  );
+  const trpstr10 = await fileOrPathExists(
+    path.join(pathToOutputDir, "first_qc-sample-callnum.pdf")
+  );
+
+  const trpstr11 = await fileOrPathExists(
+    path.join(pathToOutputDir, "first_qc-chrom-callnum.pdf")
+  );
+
+  // section c
+
+  const trpstr12 = await fileOrPathExists(
+    path.join(pathToOutputDir, "dump.vcf.gz")
+  );
+  const trpstr13 = await fileOrPathExists(
+    path.join(pathToOutputDir, "dump.samplog.tab")
+  );
+  // section d
+  const trpstr14 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-diffref-bias.pdf")
+  );
+  const trpstr15 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-diffref-histogram.pdf")
+  );
+  const trpstr16 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-quality-locus-stratified.pdf")
+  );
+  const trpstr17 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-quality-per-call.pdf")
+  );
+  const trpstr18 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-quality-per-locus.pdf")
+  );
+  const trpstr19 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-quality-per-sample.pdf")
+  );
+
+  const trpstr20 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-quality-sample-stratified.pdf")
+  );
+  const trpstr21 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-sample-callnum.pdf")
+  );
+
+  const trpstr22 = await fileOrPathExists(
+    path.join(pathToOutputDir, "second_qc-chrom-callnum.pdf")
+  );
+
+  // section e
+  const trpstr23 = await fileOrPathExists(
+    path.join(pathToOutputDir, "stat.tab")
+  );
+  const trpstr24 = await fileOrPathExists(
+    path.join(pathToOutputDir, "stat.samplog.tab")
   );
 
   closeDB();

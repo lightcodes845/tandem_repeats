@@ -8,7 +8,7 @@ const { fileOrPathExists } = require("../utils/fileutils");
 
 exports.createJob = async (req, next, queue, user, email) => {
     // Test file
-    const testPath = "NA12891_chr21_gangstr.sorted.vcf.gz";
+    const testPath = "/home/dzumi/trFiles/test/NA12891_chr21_gangstr.sorted.vcf.gz";
 
     // validate input file
     let file = "";
